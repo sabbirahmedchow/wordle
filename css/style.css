@@ -1,0 +1,160 @@
+body{
+  padding: 0;
+  margin: 0;
+  background-color: #cccccc;
+}
+
+#head{
+  width: auto;
+  background-color: #000000;
+  padding: 6px;
+  color: #ffffff;
+  font-size: 2em;
+  text-align: center;
+  margin: 0 auto;
+  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
+  font-weight: bold;
+}
+
+#game-board{
+  display: grid;
+  grid-template-columns: repeat(5, 30px);
+  margin-top: 2em;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 1.8em;
+  grid-row-gap:1.0em;
+  
+  
+}
+
+.tiles{
+  background-color: #aaaaaa;
+  padding: 10px;
+  margin: 0 auto;
+  width: 25px;
+  height: 30px;
+  border: 3px solid #eeeeee;
+  justify-items: center;
+  font-size: 2.0em;
+  text-align: center;
+  font-family:  Arial, Helvetica, sans-serif;
+  
+}
+
+.word-not-found{
+  background-color: #363636;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transform: rotate(360deg);
+  color: #ffffff;
+}
+
+.word-found{
+  background-color: #00ff00;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transform: rotate(360deg);
+  color: #ffffff
+}
+.word-found-not-in-place{
+  background-color: #f3f037;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transform: rotate(360deg);
+  color: #ffffff
+}
+
+#time-remain{
+  width: 100%;
+  margin: 0 auto auto 50px;
+  padding: 40px;
+  color: #ff0000;
+  font-size: 1.3em;
+  font-weight: bold;
+ 
+}
+
+/* modal style */
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 1rem 1.0rem;
+  width: 24rem;
+  border-radius: 0.5rem;
+}
+
+.modal-text{
+  width: 100%;
+  float: left;
+ 
+}
+
+.btn-box{
+  width: 100%;
+  clear: both;
+  margin: 0 auto;
+  
+}
+
+.btn{
+ padding: 10px; 
+ width: 30%;
+ margin-left: 130px;
+ background-color: cornflowerblue;
+ color:#ffffff;
+ font-size: 18px;
+ font-weight: bold;
+}
+
+.modal-content h2{
+  
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 1em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  width: 50%;
+  float: left;
+}
+
+.close-button {
+  float: right;
+  width: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  background-color: lightgray;
+}
+
+.close-button:hover {
+  background-color: darkgray;
+}
+
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1.0);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
