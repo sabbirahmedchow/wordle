@@ -47,10 +47,10 @@ export class Board{
       var head2 = document.createElement("h1");
       gameStatus.style.visibility = "visible";
       
-      head1.innerHTML = "Result:"+localStorage.getItem("gameResult");
+      head1.innerHTML = "Result: <span class='txtColor'>"+localStorage.getItem("gameResult")+"</span>";
       gameResult.appendChild(head1);
       
-      head2.innerHTML = "Total Attempt:"+localStorage.getItem("totalAttempt");
+      head2.innerHTML = "Total Attempt: <span class='txtColor'>"+localStorage.getItem("totalAttempt")+"</span>";
       gameAttempt.appendChild(head2);
    }
 
