@@ -1,5 +1,7 @@
 var isWrong = false;
 var isWon = false;
+var isComplete = false;
+var totalStep = 0;
 var j = 0;
 var numKeyPress = 5;
 var word= [];
@@ -7,19 +9,20 @@ var k = 0;
 var numberFound = 0;
 var letterArr = [];
 
-import {originalWord} from './Board.js'; //import today's word.
+import {originalWord, Board} from './Board.js'; //import today's word and the board to initialize it when the game is finished.
 
 
 document.addEventListener("keydown", function(event) { //When a key is pressed
-    console.log(event.key)
-    if(event.key == "CapsLock")
+    
+    if(event.getModifierState("CapsLock"))
     {
         alert("Turn your caps lock off!!");
         event.preventDefault();
         return false;
     }
     var key = event.keyCode || event.charCode;
-    if(key == 8 && numKeyPress < 5){
+
+    if(key == 8 && numKeyPress < 5){ // if backspace is pressed
         j=j-1;  
         numKeyPress++;
         word.pop(0, -1);
@@ -32,7 +35,6 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
     //set the pressed characters in to the respective tiles.
     while(numKeyPress != 0 && event.key != "Enter")
     {
-        //test = j;
         if(isWon == true)
         {
             event.preventDefault();
@@ -57,7 +59,6 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
     // Once the 5 characters are pressed, turn the numKeyPress counter to zero for next turn.     
     if(event.key == "Enter" && numKeyPress == 0)
     {
-        //console.log(word)
         numKeyPress = 5;
         //send the word to check for further validation.
         checkWord(word, j, letterArr);
@@ -164,7 +165,6 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
                     keyElement.addEventListener("click", () => {
                         numKeyPress = 5;
                         //send the word to check for further validation.
-                        //console.log(word)
                         checkWord(word, j, letterArr);
                         word=[];
                         
@@ -178,7 +178,7 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
                       
                     keyElement.addEventListener("click", (event) => {
                         letterArr.push(`btn-${key}`);
-                        //console.log(keyElement)
+                        
                         while(numKeyPress != 0 && key != "Enter")
                         {
                             
@@ -255,7 +255,7 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
 };
 
 async function checkWord(w, j, lArr){
-   //console.log(lArr);
+    totalStep++;
     let text = w.toString().replace(/,/g,''); //convert array to string and remove comma from string 
     var counter = j-5;
     //check if the word is in the dictionary.
@@ -271,15 +271,10 @@ async function checkWord(w, j, lArr){
                 color: '#ff0000',
                 title: 'Error',
                 message: 'Not in word list',
-                onClosing: function(){
-                    countdownTimeStart();
-                    document.getElementById(`trigger`).click();
-               }
                 
             });
             isWrong = true;
             letterArr.splice(-5);//remove invalid word from array
-            //counter = 
             for(var i = counter; i < j; i++)
             {
                 document.getElementById(`tiles-${i}`).innerHTML = "";
@@ -291,7 +286,7 @@ async function checkWord(w, j, lArr){
            
          for(var i=0; i<5; i++)
          {
-             
+               
             if(originalWord.includes(w[i]))
             {
                  //console.log(`the found word is:${originalWord[i]} index is:${i}`);
@@ -311,8 +306,15 @@ async function checkWord(w, j, lArr){
                             title: 'Success',
                             message: 'Great, You found the word!',
                             onClosing: function(){
-                                 document.getElementById(`trigger`).click();
-                            }
+                                isComplete = true;
+                                localStorage.setItem("gameComplete", isComplete);
+                                localStorage.setItem("gameResult", "Won");
+                                countdownTimeStart();
+                                const board1 = new Board(); //initialize the board once again
+                                document.getElementById("game-board").style.display = "none";
+                                document.getElementById("game-status").style.visibility = "visible";
+                                Keyboard.close();
+                           }
                         });
                         // FB.ui({
                         //     display: 'popup',
@@ -340,7 +342,7 @@ async function checkWord(w, j, lArr){
              
          }
          
-         if(k == 25 && isWon == false) //when the game is complete
+         if(k == 30 && isWon == false) //when the game is completed
          {
             let today_word = originalWord.toString().replace(/,/g,'');
             iziToast.error({
@@ -352,22 +354,32 @@ async function checkWord(w, j, lArr){
                 title: 'Failed',
                 message: `The actual word is: ${today_word}`,
                 onClosing: function(){
+                    isComplete = true;
+                    localStorage.setItem("gameComplete", isComplete);
+                    localStorage.setItem("gameResult", "Lost");
                     countdownTimeStart();
-                    document.getElementById(`trigger`).click();
+                    const board1 = new Board(); //initialize the board once again
+                    document.getElementById("game-board").style.display = "none";
+                    document.getElementById("game-status").style.visibility = "visible";
+                    Keyboard.close();
                }
             });
              
          }
 
         }
+        localStorage.setItem("totalAttempt", totalStep);
     }
    
 window.addEventListener("DOMContentLoaded", function () {
+    if(localStorage.getItem("gameComplete") == "false" || localStorage.getItem("gameComplete") == null)
     Keyboard.init();
 
 });
 
-function countdownTimeStart(){
+export function countdownTimeStart(){
+
+var getCountDownDate = localStorage.getItem("countDownDate");
 
 var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 var day = currentDate.getDate()
@@ -377,7 +389,12 @@ var time = currentDate.toLocaleTimeString();
 
 var dateStr = new Date(`${year}-${month}-${day} ${time}`);
 
+if(getCountDownDate == null)
 var countDownDate = new Date(dateStr).getTime();
+else
+var countDownDate = getCountDownDate;
+
+localStorage.setItem("countDownDate", countDownDate);
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -393,16 +410,20 @@ var x = setInterval(function() {
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
   
-  // Output the result in an element with id="demo"
-  document.getElementById("time-remain").innerHTML = hours + "h "
-  + minutes + "m " + seconds + "s ";
-  
-  // If the count down is over, write some text 
+  // If the count down is over, clear the localstorage and reload the page 
   if (distance < 0) {
+      localStorage.clear();
       clearInterval(x);
-      document.getElementById("demo").innerHTML = "EXPIRED";
-  }
+      location.reload();
+      return false;
+   } 
+
+  // Output the result in an element with id="demo"
+  document.getElementById("time-remain").innerHTML = "<span>Next Word In:</span><br/>"+hours + "h "
+  + minutes + "m " + seconds + "s ";
+
 }, 1000);
+
 }
 
 

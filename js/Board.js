@@ -1,13 +1,21 @@
 export var originalWord;
 const numTiles= 30;
 
-class Board{
+import {countdownTimeStart} from './Game.js';
+
+export class Board{
    
    constructor(){
-    this.getWordOfTheDay();   
-    this.createGameBoard();
-       
-       //Keyboard.init();
+    var getGameStatus = localStorage.getItem("gameComplete"); 
+    
+      if(getGameStatus == 'true' || getGameStatus != null){
+         this.showGameStatus();
+      }
+      else{ 
+         this.getWordOfTheDay();   
+         this.createGameBoard();
+      } 
+     
    }
 
     createGameBoard(){
@@ -27,7 +35,23 @@ class Board{
       const today_word = await response.json();
       
       originalWord = today_word.toUpperCase().split('');
-      console.log(originalWord);
+      //console.log(originalWord);
+   }
+
+   showGameStatus(){
+      countdownTimeStart();// To calculate the recent time and show it on the screen
+      const gameStatus = document.getElementById("game-status");
+      const gameResult = document.getElementById("game-result");
+      const gameAttempt = document.getElementById("game-attempt");
+      var head1 = document.createElement("h1");
+      var head2 = document.createElement("h1");
+      gameStatus.style.visibility = "visible";
+      
+      head1.innerHTML = "Result:"+localStorage.getItem("gameResult");
+      gameResult.appendChild(head1);
+      
+      head2.innerHTML = "Total Attempt:"+localStorage.getItem("totalAttempt");
+      gameAttempt.appendChild(head2);
    }
 
 }

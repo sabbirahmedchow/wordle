@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="keyboard.css">
-  <script src="Board.js" type="module"></script>
-  <script src="Game.js" type="module"></script>
+  <title>Wordle - Funny and mind tingling word puzzle game</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/keyboard.css">
+  <script src="./js/Board.js" type="module"></script>
+  
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -23,26 +23,22 @@
     };
   </script> -->
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+  <div class="wrapper">
   <div id="head">Wordle</div>
   <div id="game-board">
-    <!--tiles will be added here-->
+    <!--word tiles will be added here-->
   </div>
-  
- <div class="trigger" id="trigger"></div>
-<div class="modal">
-    <div class="modal-content">
-        <span class="close-button">×</span>
-        <div class="modal-text"><h2>Result: Won</h2></div>
-        <div class="modal-text"><h2>Total Attempt: 2</h2></div>
-        <div><h2>Next Turn in: <p id="time-remain"></p></h2></div>
-        <div class="btn-box"><button class="btn">Share</button></div>      
-  
-    </div>
+
+  <!--Once the game is finished, the following block will be displayed-->
+  <div id="game-status">
+    <div id="game-result"></div>
+    <div id="game-attempt"></div>
+    <div id="time-remain"></div>  
+ </div>
 </div>
-  <link rel="stylesheet" href="izitoast.css">
-  <script src="iziToast.js" type="text/javascript"></script>
-  <script src="modal.js" type="text/javascript"></script>
-    <!-- <script src="keyboard.js" type="module"></script> -->
+  <script src="./js/Game.js" type="module"></script>
+  <link rel="stylesheet" href="./css/izitoast.css">
+  <script src="./js/iziToast.js" type="text/javascript"></script>
   
   <!-- <script>
     document.getElementById('shareBtn').onclick = function() {
