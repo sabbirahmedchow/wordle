@@ -30,11 +30,12 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
         document.getElementById(`tiles-${j}`).innerHTML = "";
         if(event.key != "Backspace")
         document.getElementById(`btn-${event.key}`).removeAttribute("id");
-       }
+    }
 
     //set the pressed characters in to the respective tiles.
     while(numKeyPress != 0 && event.key != "Enter")
     {
+        
         if(isWon == true)
         {
             event.preventDefault();
@@ -47,6 +48,7 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
         }
     
         if((key >= 65 && key <= 90) && key != 8) { //only allow letters
+            
             letterArr.push(`btn-${event.key}`);
             numKeyPress--;
             document.getElementById(`tiles-${j}`).innerHTML = event.key.toUpperCase();
@@ -56,14 +58,13 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
         }
         return false;
     }
-    // Once the 5 characters are pressed, turn the numKeyPress counter to zero for next turn.     
-    if(event.key == "Enter" && numKeyPress == 0)
+    
+    if(event.key == "Enter" && numKeyPress == 0) //if enter is pressed
     {
-        numKeyPress = 5;
+        
         //send the word to check for further validation.
         checkWord(word, j, letterArr);
         word=[];
-        
     }   
     
   });
@@ -163,38 +164,41 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
                     keyElement.innerHTML = createIconHTML("keyboard_return");
 
                     keyElement.addEventListener("click", () => {
+                       
                         numKeyPress = 5;
                         //send the word to check for further validation.
                         checkWord(word, j, letterArr);
                         word=[];
                         
-                        this._triggerEvent("oninput");
                     });
 
                     break;
 
                 default:
+                    
                     keyElement.textContent = key.toUpperCase();
                       
-                    keyElement.addEventListener("click", (event) => {
+                    keyElement.addEventListener("click", function(event) {
+                       
                         letterArr.push(`btn-${key}`);
-                        
+                        //console.log(numKeyPress)
                         while(numKeyPress != 0 && key != "Enter")
                         {
                             
                             if(isWrong == true)
                             {
-                            j = j-5;
-                            isWrong = false;
+                                j = j-5;
+                                isWrong = false;
                             }
+
                             if(isWon == true)
                             {
                                 event.preventDefault();
                                 return false;
                             }
                         
-                            if(((key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')) && key != 8) { //only allow letters
-                                
+                            if(((key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')) && key != "Enter") { //only allow letters
+                                console.log(j);
                                 numKeyPress--;
                                 document.getElementById(`tiles-${j}`).innerHTML = key.toUpperCase();
                                 word.push(key.toUpperCase());
@@ -205,10 +209,8 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
                             }
                             return false;
                         }
-                        this._triggerEvent("oninput");
                         
                     });
-                    
                     break;
             }
 
@@ -223,21 +225,21 @@ document.addEventListener("keydown", function(event) { //When a key is pressed
         return fragment;
     },
 
-    _triggerEvent(handlerName) {
-        if (typeof this.eventHandlers[handlerName] == "function") {
-            this.eventHandlers[handlerName](this.properties.value);
-        }
-    },
+    // _triggerEvent(handlerName) {
+    //     if (typeof this.eventHandlers[handlerName] == "function") {
+    //         this.eventHandlers[handlerName](this.properties.value);
+    //     }
+    // },
 
-    _toggleCapsLock() {
-        this.properties.capsLock = !this.properties.capsLock;
+    // _toggleCapsLock() {
+    //     this.properties.capsLock = !this.properties.capsLock;
 
-        for (const key of this.elements.keys) {
-            if (key.childElementCount === 0) {
-                key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
-            }
-        }
-    },
+    //     for (const key of this.elements.keys) {
+    //         if (key.childElementCount === 0) {
+    //             key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+    //         }
+    //     }
+    // },
 
     open(initialValue, oninput, onclose) {
         this.properties.value = initialValue || "";
@@ -290,8 +292,8 @@ async function checkWord(w, j, lArr){
             if(originalWord.includes(w[i]))
             {
                  //console.log(`the found word is:${originalWord[i]} index is:${i}`);
-                 if(originalWord[i] == w[i])
-                 {
+                if(originalWord[i] == w[i])
+                {
                   numberFound++;   
                   document.getElementById(`tiles-${k}`).classList.add('word-found');
                   if(numberFound == 5)
@@ -309,18 +311,14 @@ async function checkWord(w, j, lArr){
                                 isComplete = true;
                                 localStorage.setItem("gameComplete", isComplete);
                                 localStorage.setItem("gameResult", "Won");
-                                countdownTimeStart();
+                                
                                 const board1 = new Board(); //initialize the board once again
                                 document.getElementById("game-board").style.display = "none";
                                 document.getElementById("game-status").style.visibility = "visible";
                                 Keyboard.close();
                            }
                         });
-                        // FB.ui({
-                        //     display: 'popup',
-                        //     method: 'feed',
-                            
-                        //   }, function(response){});
+                        
                   }
                   document.getElementById(lArr[k]).classList.add('keyboard__key--found');  
                 }
@@ -334,10 +332,9 @@ async function checkWord(w, j, lArr){
              }
              else{
                 numberFound = 0;
-               
                 document.getElementById(`tiles-${k}`).classList.add('word-not-found');
-                   document.getElementById(lArr[k]).classList.add('keyboard__key--not-found');
-             }
+                document.getElementById(lArr[k]).classList.add('keyboard__key--not-found');
+            }
              k++;
              
          }
@@ -357,7 +354,7 @@ async function checkWord(w, j, lArr){
                     isComplete = true;
                     localStorage.setItem("gameComplete", isComplete);
                     localStorage.setItem("gameResult", "Lost");
-                    countdownTimeStart();
+                    
                     const board1 = new Board(); //initialize the board once again
                     document.getElementById("game-board").style.display = "none";
                     document.getElementById("game-status").style.visibility = "visible";
@@ -369,6 +366,7 @@ async function checkWord(w, j, lArr){
 
         }
         localStorage.setItem("totalAttempt", totalStep);
+        numKeyPress = 5; // set the number of key press to 5 for next word
     }
    
 window.addEventListener("DOMContentLoaded", function () {
@@ -377,54 +375,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 });
 
-export function countdownTimeStart(){
 
-var getCountDownDate = localStorage.getItem("countDownDate");
-
-var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-var day = currentDate.getDate()
-var month = currentDate.getMonth() + 1
-var year = currentDate.getFullYear()
-var time = currentDate.toLocaleTimeString();
-
-var dateStr = new Date(`${year}-${month}-${day} ${time}`);
-
-if(getCountDownDate == null)
-var countDownDate = new Date(dateStr).getTime();
-else
-var countDownDate = getCountDownDate;
-
-localStorage.setItem("countDownDate", countDownDate);
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get todays date and time
-  var now = new Date().getTime();
-  
-  // Find the distance between now an the count down date
-  var distance = countDownDate - now;
-  
-  // Time calculations for days, hours, minutes and seconds
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  
-  // If the count down is over, clear the localstorage and reload the page 
-  if (distance < 0) {
-      localStorage.clear();
-      clearInterval(x);
-      location.reload();
-      return false;
-   } 
-
-  // Output the result in an element with id="demo"
-  document.getElementById("time-remain").innerHTML = "<span>Next Word In:</span><br/>"+hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-}, 1000);
-
-}
 
 
 
