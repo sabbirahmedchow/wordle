@@ -1,0 +1,115 @@
+body{
+  padding: 0;
+  margin: 0;
+  background-color: #cccccc;
+}
+
+.wrapper{
+  width: 100%;
+  clear: both;
+  margin: 0 auto;
+}
+
+#head{
+  width: auto;
+  background-color: #000000;
+  padding: 6px;
+  color: #ffffff;
+  font-size: 2em;
+  text-align: center;
+  margin: 0 auto;
+  font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
+  font-weight: bold;
+}
+
+#game-board{
+  display: grid;
+  grid-template-columns: repeat(5, 30px);
+  margin-top: 2em;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 1.8em;
+  grid-row-gap:1.0em;
+  
+  
+}
+
+.tiles{
+  background-color: #aaaaaa;
+  padding: 10px;
+  margin: 0 auto;
+  width: 25px;
+  height: 30px;
+  border: 3px solid #eeeeee;
+  justify-items: center;
+  font-size: 2.0em;
+  text-align: center;
+  font-family:  Arial, Helvetica, sans-serif;
+  
+}
+
+.word-not-found{
+  background-color: #363636;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transform: rotate(360deg);
+  color: #ffffff;
+}
+
+.word-found{
+  background-color: #00ff00;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transform: rotate(360deg);
+  color: #ffffff
+}
+.word-found-not-in-place{
+  background-color: #f3f037;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transform: rotate(360deg);
+  color: #000000
+}
+
+#time-remain{
+  width: 100%;
+  color: #ff0000;
+  font-size: 3.5em;
+  font-weight: bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+ 
+}
+
+#time-remain span{
+  color: #000000;
+}
+
+#game-status {
+  margin: 0 auto;
+  visibility: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+
+#game-result
+{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.8em;
+
+}
+
+#game-attempt
+{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.8em;
+
+}
+
+.txtColor{
+  color: #ff0000;
+}

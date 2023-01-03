@@ -12,17 +12,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-  <!-- <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId            : '285864340289024',
-        autoLogAppEvents : true,
-        xfbml            : true,
-        version          : 'v13.0'
-      });
-    };
-  </script> -->
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
   <div class="wrapper">
   <div id="head">Wordle</div>
   <div id="game-board">
@@ -33,22 +23,13 @@
   <div id="game-status">
     <div id="game-result"></div>
     <div id="game-attempt"></div>
-    <div id="time-remain"></div>  
- </div>
+    <div id="btnNew"></div>
+  </div>
+
 </div>
   <script src="./js/Game.js" type="module"></script>
   <link rel="stylesheet" href="./css/izitoast.css">
   <script src="./js/iziToast.js" type="text/javascript"></script>
-  
-  <!-- <script>
-    document.getElementById('shareBtn').onclick = function() {
-      FB.ui({
-        display: 'popup',
-        method: 'feed',
-        
-      }, function(response){});
-    }
-    </script> -->
-
+ 
 </body>
 </html>

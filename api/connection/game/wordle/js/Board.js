@@ -1,6 +1,8 @@
 export var originalWord;
 const numTiles= 30;
 
+import {countdownTimeStart} from './Game.js';
+
 export class Board{
    
    constructor(){
@@ -17,7 +19,6 @@ export class Board{
    }
 
     createGameBoard(){
-         console.log("Board created");
          var board = document.getElementById("game-board");
          for(var i = 0; i < numTiles; i++){
             var tile = document.createElement('div');
@@ -29,7 +30,7 @@ export class Board{
    }
 
    async getWordOfTheDay(){
-      const response = await fetch("http://localhost/wordle/api/getWordofTheDay.php");
+      const response = await fetch("http://omnisourcetechbd.com/game/wordle/api/getWordofTheDay.php");
       const today_word = await response.json();
       
       originalWord = today_word.toUpperCase().split('');
@@ -37,15 +38,12 @@ export class Board{
    }
 
    showGameStatus(){
-      
+      countdownTimeStart();// To calculate the recent time and show it on the screen
       const gameStatus = document.getElementById("game-status");
       const gameResult = document.getElementById("game-result");
       const gameAttempt = document.getElementById("game-attempt");
-      const gameBtn = document.getElementById("btnNew");
-
       var head1 = document.createElement("h1");
       var head2 = document.createElement("h1");
-      var btn1 = document.createElement("button");
       gameStatus.style.visibility = "visible";
       
       head1.innerHTML = "Result: <span class='txtColor'>"+localStorage.getItem("gameResult")+"</span>";
@@ -53,15 +51,6 @@ export class Board{
       
       head2.innerHTML = "Total Attempt: <span class='txtColor'>"+localStorage.getItem("totalAttempt")+"</span>";
       gameAttempt.appendChild(head2);
-
-      btn1.innerHTML = "Play Again";
-      btn1.addEventListener("click", () => {
-         localStorage.clear();
-         location.reload();
-
-      });
-      btn1.classList.add("btnCls");
-      gameBtn.appendChild(btn1);
    }
 
 }

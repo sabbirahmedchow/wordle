@@ -113,3 +113,12 @@ body{
 .txtColor{
   color: #ff0000;
 }
+
+.btnCls{
+  background-color: #000000;
+  color: #ffffff;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+}
