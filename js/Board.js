@@ -1,7 +1,6 @@
 export var originalWord;
 const numTiles= 30;
 
-import {countdownTimeStart} from './Game.js';
 
 export class Board{
    
